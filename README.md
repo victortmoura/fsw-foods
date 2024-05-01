@@ -6,3 +6,25 @@
 
 # Rodar App
 `npm run dev`
+
+# Atalhos nos arquivos .tsx
+plugin *simple react snippets*
+
+`sfc`:
+
+```
+Stateless Function Component (Simple React Snippets)
+
+const  = () => {
+    return (  );
+}
+ 
+export default ;
+```
+
+`.flex`:
+
+```
+<div className="flex">|</div>
+```
+
