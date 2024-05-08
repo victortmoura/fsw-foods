@@ -1,6 +1,10 @@
 import { Category } from "@prisma/client";
 import Image from "next/image";
 
+// "Cada item vai ser a mesma coisa em questão de estilo, o que vai mudar
+// vai ser as informações. Quando você tem um componente que é a mesma coisa
+// em questão de estilo e só mudar as informações que ele exibe, aí você usa props."
+
 interface CategoryItemProps {
   category: Category;
 }
