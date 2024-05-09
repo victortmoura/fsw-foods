@@ -1,13 +1,22 @@
-import { Product } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import { calculateProductTotalPrice, formatCurrency } from "../_helpers/price";
+import { ArrowDownIcon } from "lucide-react";
 
 // "Cada item vai ser a mesma coisa em questão de estilo, o que vai mudar
 // vai ser as informações. Quando você tem um componente que é a mesma coisa
 // em questão de estilo e só mudar as informações que ele exibe, aí você usa props."
 
 interface ProductItemProps {
-  product: Product;
+  product: Prisma.ProductGetPayload<{
+    include: {
+      restaurant: {
+        select: {
+          name: true;
+        };
+      };
+    };
+  }>;
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {
@@ -23,7 +32,17 @@ const ProductItem = ({ product }: ProductItemProps) => {
           fill
           className="rounded-lg object-cover shadow-md"
         />
+        {product.discountPercentage > 0 && (
+          <div className="absolute left-2 top-2 flex items-center gap-[2px] rounded-full bg-primary px-2 py-[2px] text-white">
+            <ArrowDownIcon size={12} />
+            <span className="text-xs font-semibold">
+              {product.discountPercentage}%
+            </span>
+          </div>
+        )}
+        ;
       </div>
+
       {/* div do TITULO, PREÇO E RESTAURANTE */}
       <div>
         <h2 className="truncate text-sm">{product.name}</h2>
@@ -32,10 +51,13 @@ const ProductItem = ({ product }: ProductItemProps) => {
           {product.discountPercentage > 0 && (
             <span className="text-xs text-muted-foreground line-through">
               {" "}
-              {formatCurrency(product.price)}
+              {formatCurrency(Number(product.price))}
             </span>
           )}
         </div>
+        <span className="block text-xs text-muted-foreground">
+          {product.restaurant.name}
+        </span>
       </div>
     </div>
   );
